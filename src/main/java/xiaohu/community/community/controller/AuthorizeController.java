@@ -9,6 +9,8 @@ import xiaohu.community.community.dto.AccessTokenDTO;
 import xiaohu.community.community.dto.GithubUser;
 import xiaohu.community.community.provider.GithubProvider;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class AuthorizeController {
     @Autowired
@@ -20,9 +22,11 @@ public class AuthorizeController {
     private String clientSecret;
     @Value("${github.redirect.uri}")
     private String redirectUri;
+
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
-                           @RequestParam(name = "state") String state){
+                           @RequestParam(name = "state") String state,
+                           HttpServletRequest request) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
         accessTokenDTO.setClient_id("69340279bb42400a0069");
@@ -32,6 +36,13 @@ public class AuthorizeController {
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser user = GithubProvider.getUser(accessToken);
         System.out.println(user.getName());
-        return "index";
+        if (user != null) {
+            request.getSession().setAttribute("user", user);
+            return "redirect:index";
+            //登录成功，写cookie 和 session
+        } else {
+            //登录失败，重新登录
+            return "redirect:index";
+        }
     }
 }
