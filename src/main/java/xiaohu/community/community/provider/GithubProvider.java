@@ -28,7 +28,7 @@ public class GithubProvider {
         return null;
     }
 
-    public static GithubUser getUser(String accessToken){
+    public GithubUser getUser(String accessToken){
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://api.github.com/user")

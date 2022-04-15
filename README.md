@@ -5,10 +5,15 @@
 [elastic 中文社区](https://elasticsearch.cn/explore)
 [Github OAuth](https://docs.github.com/en/developers/apps/building-oauth-apps)
 [Flyway](https://flywaydb.org/documentation/getstarted/firststeps/maven)
+[lombok](https://projectlombok.org/)
+[thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#difference-between-thinsert-and-threplace-and-thinclude)
+[jquery](https://jquery.com/download/)
 ## 工具
 [Github](https://github.com/)
 [Visual Paradigm](https://www.visual-paradigm.com/cn/)
 [OkHttp](https://square.github.io/okhttp/)
+[flyway](https://flywaydb.org/documentation/getstarted/firststeps/maven)
+[lombok](https://projectlombok.org/setup/maven)
 ## 脚本
 ```sql
 create table USER
@@ -22,5 +27,5 @@ create table USER
     constraint USER_PK
         primary key (ID)
 );
-
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 ```

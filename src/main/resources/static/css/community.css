@@ -1,0 +1,73 @@
+body{
+    background-color: #fcf8e3;
+}
+.main{
+    background-color: white;
+    margin: 30px;
+}
+.btn-publish{
+    float: right;
+    margin-bottom: 15px;
+}
+.question-tag{
+    margin-right: 5px;
+}
+.question-related{
+    line-height: 20px;
+    font-size: 12px;
+    list-style: none;
+    padding-left: 0;
+}
+.question-related .tag{
+    margin-bottom: 10px;
+}
+.img-wechat{
+    width: 200px;
+    height: 200px
+}
+.publish-tag-tab{
+    display: none;
+    margin-top: 10px;
+}
+.publish-tag-pane{
+    margin-right: 10px;
+}
+.media-object{
+    width: 40px;
+    height: 40px;
+}
+.media-body{
+    padding-top: 5px;
+}
+.text-desc{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+.profile .section{
+    margin-top: 15px;
+}
+.community-menu{
+    font-size: 14px;
+    color: #999;
+}
+.jumbotron{
+    margin: 50px;
+}
+.comment{
+    margin:10px 10px;
+}
+.comment-sp{
+    margin-top: 0;
+}
+.menu{
+    color: #999;
+}
+.menu .icon{
+    margin-top: 5px;
+    margin-right: 15px;
+    font-size: 15px;
+}
+.menu .icon:hover{
+    color: #499ef3;
+}
