@@ -8,6 +8,9 @@
 [lombok](https://projectlombok.org/)
 [thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#difference-between-thinsert-and-threplace-and-thinclude)
 [jquery](https://jquery.com/download/)
+[Markdown 插件](https://pandao.github.io/editor.md/)
+[UFile SDK](https://github.com/ucloud/ufile-sdk-java)
+[图标素材库](https://www.iconfont.cn/)
 ## 工具
 [Github](https://github.com/)
 [Visual Paradigm](https://www.visual-paradigm.com/cn/)
@@ -16,7 +19,7 @@
 [lombok](https://projectlombok.org/setup/maven)
 ## 脚本
 ```sql
-create table USER
+0create table USER
 (
     ID           INT auto_increment,
     ACCOUNT_ID   VARCHAR(100),

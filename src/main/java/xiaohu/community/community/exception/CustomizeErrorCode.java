@@ -6,7 +6,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode{
     NO_LOGIN(2003,"请先登录！"),
     SYSTEM_ERROR(2004,"服务出错啦，要不稍后再试试~~~"),
     COMMENT_NOT_FOUND(2006,"回复的评论已不存在！"),
-    COMMENT_IS_EMPTY(2007,"输入内容不能为空！");
+    COMMENT_IS_EMPTY(2007,"输入内容不能为空！"),
+    FILE_UPLOAD_FAIL(2008,"图片上传失败！");
     @Override
     public  String getMessage(){
         return message;

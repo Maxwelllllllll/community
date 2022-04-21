@@ -1,5 +1,5 @@
 body{
-    background-color: #fcf8e3;
+    background-color: #efefef;
 }
 .main{
     background-color: white;
@@ -38,6 +38,11 @@ body{
 }
 .media-body{
     padding-top: 5px;
+}
+.footer{
+    padding: 5px 0 20px;
+    font-size: 15px;
+    text-align: center;
 }
 .text-desc{
     font-size: 12px;

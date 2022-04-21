@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xiaohu.community.community.dto.PaginationDTO;
 import xiaohu.community.community.dto.QuestionDTO;
+import xiaohu.community.community.dto.QuestionQueryDTO;
 import xiaohu.community.community.exception.CustomizeErrorCode;
 import xiaohu.community.community.exception.CustomizeException;
 import xiaohu.community.community.mapper.QuestionExtMapper;
@@ -31,9 +32,20 @@ public class QuestionService {
     @Autowired
     private QuestionExtMapper questionExtMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
+    //主页问题列表展示
+    public PaginationDTO list(String search, Integer page, Integer size) {
+        //如果search不为空就对search进行分割
+        if(StringUtils.isNotBlank(search)){
+            String[] tags = StringUtils.split(search,",");
+            search = Arrays.stream(tags).collect((Collectors.joining("|")));
+        }
+
         PaginationDTO paginationDTO = new PaginationDTO();
-        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());//拿到最后的数据数
+
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setSearch(search);
+        //拆寻totalCount值
+        Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
         paginationDTO.setPagination(totalCount, page, size);
         //确保页数不越界
         if(page < 1){
@@ -46,7 +58,9 @@ public class QuestionService {
         Integer offset = size * (page - 1);
         QuestionExample questionExample = new QuestionExample();
         questionExample.setOrderByClause("gmt_create desc");
-        List<Question> questions = questionMapper.selectByExampleWithBLOBsWithRowbounds(questionExample, new RowBounds(offset, size));
+        questionQueryDTO.setSize(size);
+        questionQueryDTO.setPage(offset);
+        List<Question> questions = questionExtMapper.selectBySearch(questionQueryDTO);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
 
@@ -60,10 +74,11 @@ public class QuestionService {
             questionDTOList.add(questionDTO);
         }
 
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
         return paginationDTO;
     }
 
+    //我的问题页面展示
     public PaginationDTO list(Long userId, Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
         //拿到最后的数据数
@@ -98,7 +113,7 @@ public class QuestionService {
             questionDTOList.add(questionDTO);
         }
 
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
         return paginationDTO;
     }
 
@@ -114,7 +129,7 @@ public class QuestionService {
         return questionDTO;
     }
 
-public void createOrUpdate(Question question) {
+    public void createOrUpdate(Question question) {
         //判断是修改question还是新建question
         if(question.getId() == null){
             //创建
@@ -148,6 +163,7 @@ public void createOrUpdate(Question question) {
         questionExtMapper.incView(question);
     }
 
+    //展示相关话题
     public List<QuestionDTO> selectRelated(QuestionDTO queryDTO) {
         if(StringUtils.isBlank(queryDTO.getTag())){
             return  new ArrayList<>();

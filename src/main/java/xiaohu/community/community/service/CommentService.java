@@ -6,12 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xiaohu.community.community.dto.CommentDTO;
 import xiaohu.community.community.enums.CommentTypeEnum;
+import xiaohu.community.community.enums.NotificationStatusEnum;
+import xiaohu.community.community.enums.NotificationTypeEnum;
 import xiaohu.community.community.exception.CustomizeErrorCode;
 import xiaohu.community.community.exception.CustomizeException;
-import xiaohu.community.community.mapper.CommentMapper;
-import xiaohu.community.community.mapper.QuestionExtMapper;
-import xiaohu.community.community.mapper.QuestionMapper;
-import xiaohu.community.community.mapper.UserMapper;
+import xiaohu.community.community.mapper.*;
 import xiaohu.community.community.model.*;
 
 import java.util.ArrayList;
@@ -30,9 +29,11 @@ public class CommentService {
     private QuestionExtMapper questionExtMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private NotificationMapper notificationMapper;
     //@Transactional注解在代码执行出错的时候能够进行事务的回滚。
     @Transactional
-    public void insert(Comment comment) {
+    public void insert(Comment comment, User commentator) {
         if(comment.getParentId() == null || comment.getParentId() == 0){
             throw  new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
         }
@@ -46,17 +47,46 @@ public class CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+
+            //回复问题
+            Question question = questionMapper.selectByPrimaryKey(dbComment.getParentId());
+            if(question == null){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
+            //拿到评论通知
+            createNotify(comment,dbComment.getCommentator(), commentator.getName(), question.getTitle(), NotificationTypeEnum.REPLY_COMMENT, question.getId());
+
         }else{
             //回复问题
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
             if(question == null){
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
+
+            //增加回复数
             commentMapper.insert(comment);
             question.setCommentCount(1);
             questionExtMapper.incCommentCount(question);
+
+            //拿到回复通知
+            createNotify(comment, question.getCreator(), commentator.getName(), question.getTitle(),NotificationTypeEnum.REPLY_QUESTION, question.getId());
         }
     }
+
+    //创建通知
+    private void createNotify(Comment comment, Long receiver, String notifierName, String outerTitle, NotificationTypeEnum notificationTypeEnum, Long outerId){
+        Notification notification = new Notification();
+        notification.setGmtCreate(System.currentTimeMillis());
+        notification.setType(notificationTypeEnum.getType());
+        notification.setNotifier(outerId);
+        notification.setOuterid(comment.getCommentator());
+        notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
+        notification.setReceiver(receiver);
+        notification.setNotifierName(notifierName);
+        notification.setOuterTitle(outerTitle);
+        notificationMapper.insert(notification);
+    }
+
 
     public List<CommentDTO> listByQuestionId(Long id) {
         CommentExample commentExample = new CommentExample();
