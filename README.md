@@ -8,6 +8,7 @@
 --MySQL  数据库
 ##步骤
 ------pwd 查看当前目录
+------ps -aux | grep java 查看当前进程
 --yum update
 --yum install git 安装git
 --mkdir app 创建app文件夹
