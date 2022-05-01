@@ -2,25 +2,25 @@
 
 ##部署
 ###依赖
---Git  下载代码
---JDK  编译
---Maven  构建项目
---MySQL  数据库
+-Git  下载代码
+-JDK  编译
+-Maven  构建项目
+-MySQL  数据库
 ##步骤
-------pwd 查看当前目录
-------ps -aux | grep java 查看当前进程
---yum update
---yum install git 安装git
---mkdir app 创建app文件夹
---cd app
---git clone https://github.com/Maxwelllllllll/community.git
---yum install maven 安装maven
---mvn -v 查看maven版本
---mvn clean compile package
---more src/main/resources/application.properties
---cp src/main/resources/application.properties src/main/resources/application-production.properties
---vim src/main/resources/application-production.properties
---mvn package
+-pwd 查看当前目录
+-ps -aux | grep java 查看当前进程
+-yum update
+-yum install git 安装git
+-mkdir app 创建app文件夹
+-cd app
+-git clone https://github.com/Maxwelllllllll/community.git
+-yum install maven 安装maven
+-mvn -v 查看maven版本
+-mvn clean compile package
+-more src/main/resources/application.properties
+-cp src/main/resources/application.properties src/main/resources/application-production.properties
+-vim src/main/resources/application-production.properties
+-mvn package
 --java -jar -Dspring.profiles.active=production target/community-0.0.1-SNAPSHOT.jar 运行命令
 
 ## 资料
