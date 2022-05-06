@@ -94,7 +94,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>5.2.4</version>
                 <configuration>
-                    <url>jdbc:mysql://172.17.0.3:3306/community</url>
+                    <url>jdbc:mysql://sh-cynosdbmysql-grp-10kskqxc.sql.tencentcdb.com:24508/community</url>
                     <user>root</user>
                     <password>Jin990116!</password>
                 </configuration>
