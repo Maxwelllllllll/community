@@ -1,6 +1,6 @@
 create table `comment`
 (
-    id bigint auto_increment primary key not null,
+    id bigint auto_increment,
     type int,
     gmt_create bigint,
     gmt_modified bigint,
@@ -9,4 +9,6 @@ create table `comment`
     like_count bigint default 0,
     content varchar(1024),
     comment_count int default 0,
+    constraint comment_pk
+        primary key (id)
 );
