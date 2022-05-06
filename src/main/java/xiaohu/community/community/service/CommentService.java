@@ -79,7 +79,7 @@ public class CommentService {
         notification.setGmtCreate(System.currentTimeMillis());
         notification.setType(notificationTypeEnum.getType());
         notification.setNotifier(outerId);
-        notification.setOuterid(comment.getCommentator());
+        notification.setOuterId(comment.getCommentator());
         notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
         notification.setReceiver(receiver);
         notification.setNotifierName(notifierName);

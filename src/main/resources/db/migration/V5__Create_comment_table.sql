@@ -2,7 +2,7 @@ create table comment
 (
     id bigint auto_increment primary key not null,
     type int,
-    gmt_creator bigint,
+    gmt_create bigint,
     gmt_modified bigint,
     parent_id bigint,
     commentator bigint,
