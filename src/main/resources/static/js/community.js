@@ -98,7 +98,7 @@ function comment(e) {
 /**
  * 展开二级评论
  */
-collapseComments =function(e) {
+function collapseComments(e) {
     var id = e.getAttribute("data-id");
     var comments = $("#comment-" + id);
 
