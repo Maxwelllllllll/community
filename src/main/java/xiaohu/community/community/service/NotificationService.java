@@ -57,15 +57,6 @@ public class NotificationService {
             return paginationDTO;
         }
 
-/*        //有通知就拿到通知内容
-        Set<Long> disUserIds = notifications.stream().map(notify -> notify.getNotifier()).collect(Collectors.toSet());
-        List<Long> userIds = new ArrayList<>(disUserIds);
-        UserExample userExample = new UserExample();
-        userExample.createCriteria().andIdIn(userIds);
-        //拿到
-        List<User> users = userMapper.selectByExample(userExample);
-        Map<Long, User> userMap = users.stream().collect(Collectors.toMap(u -> u.getId(), u -> u));*/
-
         List<NotificationDTO> notificationDTOS = new ArrayList<>();
         for (Notification notification : notifications) {
             NotificationDTO notificationDTO = new NotificationDTO();
