@@ -76,9 +76,9 @@ function comment2target(targetId, type, content) {
                 if (response.code == 2003) {
                     var isAccepted = confirm(response.message);
                     if (isAccepted) {
-                        $('#myModal').modal({});
-                        // window.open("https://github.com/login/oauth/authorize?client_id=7f316909bf70d1eaa2b2&redirect_uri=" + document.location.origin + "/callback&scope=user&state=1");
-                        // window.localStorage.setItem("closable", true);
+                        /*$('#myModal').modal({});*/
+                        window.open("https://github.com/login/oauth/authorize?client_id=69340279bb42400a0069&redirect_uri=" + document.location.origin + "/callback&scope=user&state=1");
+                        window.localStorage.setItem("closable", true);
                     }
                 } else {
                     alert(response.message);
@@ -98,7 +98,7 @@ function comment(e) {
 /**
  * 展开二级评论
  */
-function collapseComments(e) {
+collapseComments =function(e) {
     var id = e.getAttribute("data-id");
     var comments = $("#comment-" + id);
 
