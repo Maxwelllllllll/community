@@ -5,13 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import xiaohu.community.community.dto.CommentCreateDTO;
+import xiaohu.community.community.dto.CommentDTO;
 import xiaohu.community.community.dto.ResultDTO;
+import xiaohu.community.community.enums.CommentTypeEnum;
 import xiaohu.community.community.exception.CustomizeErrorCode;
 import xiaohu.community.community.model.Comment;
 import xiaohu.community.community.model.User;
 import xiaohu.community.community.service.CommentService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -38,5 +41,11 @@ public class CommentController {
         comment.setLikeCount(0L);
         commentService.insert(comment,user);
         return ResultDTO.okOf();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
+    public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id") Long id) {
+        List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
+        return ResultDTO.okOf(commentDTOS);
     }
 }
